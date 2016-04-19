@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts-config PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+        "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+
+    <form-beans>
+        <form-bean name="search" type="formbeans.UserForm"/>
+        <form-bean name="addUser" type="formbeans.AddUserForm"/>
+    </form-beans>
+
+    <action-mappings>
+        <!--Action to search user in DB-->
+        <action input="/goto.do?page=search" path="/search" type="actions.SearchUserAction" name="search" >
+            <forward name="success" path="success"/>
+            <forward name="failure" path="failure"/>
+        </action>
+        <!--Action to add user in DB-->
+        <action input="/goto.do?page=add" path="/addUser" type="actions.AddUserAction" name="addUser">
+            <forward name="success" path="successadduser"/>
+            <forward name="failure" path="failure"/>
+        </action>
+        <!--UI mapping with tiles-->
+        <action path="/goto" type="actions.TilesForwardController">
+            <forward name="home" path="welcome"/>
+            <forward name="search" path="search"/>
+            <forward name="add" path="add"/>
+            <forward name="contacts" path="contacts"/>
+        </action>
+    </action-mappings>
+
+    <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+
+    <message-resources parameter="Messages"/>
+
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config"
+                      value="/WEB-INF/tiles-def.xml"/>
+    </plug-in>
+
+</struts-config>
